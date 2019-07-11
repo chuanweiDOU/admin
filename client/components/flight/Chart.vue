@@ -1,9 +1,9 @@
 <script lang="ts">
-import { Component, Prop, mixins } from 'nuxt-property-decorator'
-// import Chart from 'chart.js'
+import Vue from 'vue'
+import ChartData from 'chart.js'
 import { Bar } from 'vue-chartjs'
 
-const OPTION = {
+const OPTION: ChartData.ChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
@@ -19,12 +19,17 @@ const OPTION = {
   }
 };
 
-@Component({})
-export default class FlightChart extends mixins(Bar) {
-  @Prop() chartData;
-
-  mounted () {
-    this.renderChart(this.chartData, OPTION)
+export default Vue.extend({
+  extends: Bar,
+  props: {
+    chartData: {
+      type: Object
+    }
+  },
+  methods: {
+    mounted () {
+      this.renderChart(this.chartData, OPTION)
+    }
   }
-}
+})
 </script>
