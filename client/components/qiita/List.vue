@@ -41,20 +41,27 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Vue from 'vue'
 import { getDiffTime } from '~/utils'
-import { QiitaForm } from '~/types/database.types'
 
-@Component({})
-export default class QiitaList extends Vue {
-  @Prop() list: QiitaForm[];
-  @Prop() search: string;
-  @Prop() tag: number;
-
-  diffTime(t) {
-    return getDiffTime(t)
-  }
-}
+export default Vue.extend({
+    props: {
+        list: {
+            type: Array
+        },
+        search: {
+            type: String
+        },
+        tag: {
+            type: Number
+        }
+    },
+    methods: {
+        diffTime(t) {
+            return getDiffTime(t)
+        }
+    }
+})
 </script>
 
 <style scoped>

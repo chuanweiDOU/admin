@@ -49,7 +49,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
+import { mapState } from 'vuex'
 import dayjs from 'dayjs'
 import { AIRPORT_LIST, AIRLINE_LIST, BOARDING_TYPE_LIST } from '../../utils'
 const MainTemplate = () => import('~/components/layout/MainTemplate.vue')
@@ -57,67 +58,72 @@ const StoryInput = () => import('~/components/atoms/Input.vue')
 const StorySelect = () => import('~/components/atoms/Select.vue')
 const StoryButton = () => import('~/components/atoms/Button.vue')
 
-@Component({
-  components: {
-    MainTemplate,
-    StoryInput,
-    StorySelect,
-    StoryButton
-  },
-  computed: {
-    airportOptions (this: NewFlight) {
-      let array: string[] = []
-      AIRPORT_LIST.forEach(category => {
-        array.push(category.text)
-      })
-      return array
+export default Vue.extend({
+    components: {
+        MainTemplate,
+        StoryInput,
+        StorySelect,
+        StoryButton
     },
-    airlineOptions (this: NewFlight) {
-      let array: string[] = []
-      AIRLINE_LIST.forEach(category => {
-        array.push(category.text)
-      })
-      return array
+    data () {
+        return {
+            time: dayjs().format(),
+            departure: 0,
+            arrival: 0,
+            airline: 0,
+            boardingType: 0,
+            registration: '',
+            isForm: true
+        }
     },
-    boardingTypeOptions (this: NewFlight) {
-      let array: string[] = []
-      BOARDING_TYPE_LIST.forEach(category => {
-        array.push(category.text)
-      })
-      return array
+    computed: {
+        ...mapState(mapState('product', [
+            'events'
+        ])),
+        airportOptions () {
+            let array: string[] = []
+            AIRPORT_LIST.forEach(category => {
+                array.push(category.text)
+            })
+            return array
+        },
+        airlineOptions () {
+            let array: string[] = []
+            AIRLINE_LIST.forEach(category => {
+                array.push(category.text)
+            })
+            return array
+        },
+        boardingTypeOptions () {
+            let array: string[] = []
+            BOARDING_TYPE_LIST.forEach(category => {
+                array.push(category.text)
+            })
+            return array
+        }
     },
-  },
+    methods: {
+        reset () {
+            this.time = dayjs().format()
+            this.departure = 0
+            this.arrival = 0
+            this.airline = 0
+            this.boardingType = 0
+            this.registration = ''
+        },
+        async postFlight () {
+            await this.$store.dispatch('product/addFlight', {
+                time: dayjs(this.time).format(),
+                departure: this.departure,
+                arrival: this.arrival,
+                airline: this.airline,
+                boardingType: this.boardingType,
+                registration: this.registration
+            })
+            this.reset()
+        }
+    }
 })
-export default class NewFlight extends Vue {
-  time: string = dayjs().format();
-  departure: number = 0;
-  arrival: number = 0;
-  airline: number = 0;
-  boardingType: number = 0;
-  registration: string = '';
-  isForm: boolean = true;
-
-  reset () {
-    this.time = dayjs().format()
-    this.departure = 0
-    this.arrival = 0
-    this.airline = 0
-    this.boardingType = 0
-    this.registration = ''
-  }
-
-  async postFlight () {
-    await this.$store.dispatch('product/addFlight', {
-      time: dayjs(this.time).format(),
-      departure: this.departure,
-      arrival: this.arrival,
-      airline: this.airline,
-      boardingType: this.boardingType,
-      registration: this.registration
-    })
-    this.reset()
-  }
-}
 </script>
 
 <style scoped>

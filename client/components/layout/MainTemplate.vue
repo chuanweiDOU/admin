@@ -19,28 +19,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
+import Vue from 'vue'
 const LeftMenu = () => import('~/components/layout/LeftMenu.vue')
 const StoryButton = () => import('~/components/atoms/Button.vue')
 
-@Component({
-  components: {
-    LeftMenu,
-    StoryButton
-  }
-})
-export default class MainTemplate extends Vue {
-  @Prop() userStatus: boolean;
-  isForm: boolean = true;
-
-  async logout() {
-    await this.$store.dispatch('product/signOut')
-
-    if (!this.$store.state.product.userStatus) {
-      this.$router.push('/login')
+export default Vue.extend({
+    props: {
+        userStatus: {
+            type: Boolean
+        },
+        isForm: {
+            type: Boolean
+        }
+    },
+    components: {
+        LeftMenu,
+        StoryButton
+    },
+    methods: {
+        async logout() {
+            await (this as any).$store.dispatch('product/signOut')
+            if (!(this as any).$store.state.product.userStatus) {
+                this.$router.push('/login')
+            }
+        }
     }
-  }
-}
+})
 </script>
 
 <style scoped>

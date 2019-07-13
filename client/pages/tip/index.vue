@@ -3,50 +3,34 @@
     v-if="tips && events && hosts"
     :user-status="userStatus"
   >
-    <main-template :is-form="isForm">
-      <story-input
-        v-model="inputSearch"
-        placeholder="タイトル"
-      />
-    </main-template>
-    <main-template :is-form="isForm">
-      <story-select
-        :options="eventOptions"
-        v-model="selectedEvent"
-        name="イベント"
-      />
-    </main-template>
+    <new-tip />
     <tip-list
       :list="tips.item"
       :number="page"
       :search="inputSearch"
-      @form-data="applyEditedForm"
     />
     <pagination
       :page="page"
       :max="Math.ceil(tips.item.length / 20)"
       @form-data="applyPage"
     />
-    <new-tip />
-    <edit-tip
-      :edited-form="editedForm"
-      :data-key="dataKey"
-    />
+    <!--
     <new-event />
     <host-list
       :list="hosts.item"
     />
     <new-host />
+    -->
     <new-photo />
   </main-template>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
+import { mapState } from 'vuex'
 const MainTemplate = () => import('../../components/layout/MainTemplate.vue')
 const TipList = () => import('../../components/tip/List.vue')
 const NewTip = () => import('../../components/tip/New.vue')
-const EditTip = () => import('../../components/tip/Edit.vue')
 const NewEvent = () => import('../../components/event/New.vue')
 const HostList = () => import('../../components/host/List.vue')
 const NewHost = () => import('../../components/host/New.vue')
@@ -55,86 +39,55 @@ const Pagination = () => import('../../components/layout/Pagination.vue')
 const StoryInput = () => import('../../components/atoms/Input.vue')
 const StorySelect = () => import('../../components/atoms/Select.vue')
 
-@Component({
-  middleware: 'auth',
-  components: {
-    MainTemplate,
-    TipList,
-    NewTip,
-    EditTip,
-    NewEvent,
-    HostList,
-    NewHost,
-    NewPhoto,
-    Pagination,
-    StoryInput,
-    StorySelect
-  },
-  async fetch({ store }) {
-    await store.dispatch('product/fetchTips', null)
-    await store.dispatch('product/fetchEvents')
-    await store.dispatch('product/fetchHosts')
-    await store.dispatch('product/fetchPhotos')
-  },
-  computed: {
-    eventOptions (this: TipPage) {
-      let array: string[] = []
-      this.$store.state.product.events.item.forEach((item) => {
-        array.push(item.data.name)
-      })
-      return array
+export default Vue.extend({
+    middleware: 'auth',
+    components: {
+        MainTemplate,
+        TipList,
+        NewTip,
+        NewEvent,
+        HostList,
+        NewHost,
+        NewPhoto,
+        Pagination,
+        StoryInput,
+        StorySelect
+    },
+    async fetch({ store }) {
+        await store.dispatch('product/fetchTips', null)
+        await store.dispatch('product/fetchEvents')
+        await store.dispatch('product/fetchHosts')
+        await store.dispatch('product/fetchPhotos')
+    },
+    data () {
+        return {
+            page: 1,
+            inputSearch: '',
+            selectedEvent: 0,
+            isForm: true
+        }
+    },
+    computed: {
+        ...mapState(mapState('product', [
+            'userStatus',
+            'tips',
+            'hosts',
+            'events'
+        ])),
+        eventOptions () {
+            let array: string[] = [];
+            this.$store.state.product.events.item.forEach((item) => {
+                array.push(item.data.name)
+            })
+            return array
+        }
+    },
+    methods: {
+        applyPage(value) {
+            this.page = value
+        }
     }
-  },
 })
-export default class TipPage extends Vue {
-  editedForm = {
-    title : '',
-    url: '',
-    description: '',
-    tags: [],
-    event: 0,
-    time: ''
-  };
-  dataKey: string = '';
-  page: number = 1;
-  inputSearch: string = '';
-  selectedEvent: number = 0;
-  isForm: boolean = true;
-
-  get userStatus () {
-    return this.$store.state.product.userStatus
-  }
-
-  get dialog () {
-    return this.$store.state.product.dialog
-  }
-
-  get tips () {
-    return this.$store.state.product.tips
-  }
-
-  get hosts () {
-    return this.$store.state.product.hosts
-  }
-
-  get events () {
-    return this.$store.state.product.events
-  }
-
-  async startEdited() {
-    await this.$store.dispatch('product/addDialog')
-  }
-
-  applyEditedForm(value) {
-    this.editedForm = value.data
-    this.dataKey = value.id
-    this.startEdited()
-  }
-
-  applyPage(value) {
-    this.page = value
-  }
-}
 </script>
 
 <style scoped>

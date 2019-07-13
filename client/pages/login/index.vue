@@ -1,6 +1,6 @@
 <template>
   <main-template
-    :user-status="userStatus"
+    :user-status="$store.state.product.userStatus"
     class="login"
   >
     <main-template :is-form="isForm">
@@ -26,38 +26,43 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
+import { mapState } from 'vuex'
 const MainTemplate = () => import('~/components/layout/MainTemplate.vue')
 const StoryInput = () => import('~/components/atoms/Input.vue')
 const StoryButton = () => import('~/components/atoms/Button.vue')
 
-@Component({
-  components: {
-    MainTemplate,
-    StoryInput,
-    StoryButton
-  }
-})
-export default class LoginPage extends Vue {
-  email: string = '';
-  password: string = '';
-  isForm: boolean = true;
+export default Vue.extend({
+    components: {
+        MainTemplate,
+        StoryInput,
+        StoryButton
+    },
+    data () {
+        return {
+            email: '',
+            password: '',
+            isForm: true
+        }
+    },
+    computed: {
+        ...mapState(mapState('product', [
+            'userStatus'
+        ]))
+    },
+    methods: {
+        async login () {
+            await this.$store.dispatch('product/signIn', {
+                email: this.email,
+                password: this.password
+            })
 
-  get userStatus () {
-    return this.$store.state.product.userStatus
-  }
-
-  async login () {
-    await this.$store.dispatch('product/signIn', {
-      email: this.email,
-      password: this.password
-    })
-
-    if (this.$store.state.product.userStatus) {
-      await this.$router.push('/')
+            if (this.$store.state.product.userStatus) {
+                await this.$router.push('/')
+            }
+        }
     }
-  }
-}
+})
 </script>
 
 <style scoped>

@@ -12,10 +12,10 @@
     >
       <option
         v-for="(value, key) in options"
-        :key="String(key)"
-        :value="String(key)"
+        :key="key"
+        :value="key"
       >
-        {{ String(value) }}
+        {{ value }}
       </option>
     </select>
   </div>
@@ -30,7 +30,7 @@ export default Vue.extend({
       type: String
     },
     value: {
-      type: String
+      type: Number
     },
     options: {
       type: Array

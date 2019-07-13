@@ -18,24 +18,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'nuxt-property-decorator'
-import { HostForm } from '~/types/database.types'
+import Vue from 'vue'
 const StoryLabel = () => import('~/components/atoms/Label.vue')
 
-@Component({
-  components: {
-    StoryLabel
-  },
+export default Vue.extend({
+    components: {
+        StoryLabel
+    },
+    props: {
+        list: {
+            type: Array
+        }
+    }
 })
-export default class HostList extends Vue {
-  @Prop() list: HostForm[];
-
-  // getText (id) {
-  //   return CATEGORIES.find((category) => {
-  //     if (category.value === id) return category
-  //   }).text
-  // }
-}
 </script>
 
 <style scoped>

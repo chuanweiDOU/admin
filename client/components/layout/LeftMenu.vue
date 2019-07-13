@@ -18,13 +18,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
 import { MENU_LIST } from '~/utils'
 
-@Component({})
-export default class LeftMenu extends Vue {
-  menu = MENU_LIST;
-}
+export default Vue.extend({
+    data () {
+        return {
+            menu: MENU_LIST
+        }
+    }
+})
 </script>
 
 <style scoped>

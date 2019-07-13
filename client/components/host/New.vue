@@ -53,84 +53,86 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'nuxt-property-decorator'
+import Vue from 'vue'
+import { mapState } from 'vuex'
 import { CATEGORIES, LOCALES } from '~/utils'
 const MainTemplate = () => import('~/components/layout/MainTemplate.vue')
 const StoryInput = () => import('~/components/atoms/Input.vue')
 const StorySelect = () => import('~/components/atoms/Select.vue')
 const StoryButton = () => import('~/components/atoms/Button.vue')
 
-@Component({
-  components: {
-    MainTemplate,
-    StoryInput,
-    StorySelect,
-    StoryButton
-  },
-  computed: {
-    categoryOptions (this: NewHost) {
-      let array: string[] = []
-      CATEGORIES.forEach(category => {
-        array.push(category.text)
-      })
-      return array
+export default Vue.extend({
+    components: {
+        MainTemplate,
+        StoryInput,
+        StorySelect,
+        StoryButton
     },
-    localeOptions () {
-      let array: string[] = []
-      LOCALES.forEach(locale => {
-        array.push(locale.text)
-      })
-      return array
+    data () {
+        return {
+            name: '',
+            event: 0,
+            location: '',
+            locale: 0,
+            participants: '',
+            max_participants: '',
+            lt: '',
+            isForm: true
+        }
     },
-    eventOptions (this: NewHost) {
-      let array: string[] = []
-      this.$store.state.product.events.item.forEach((item) => {
-        array.push(item.data.name)
-      })
-      return array
+    computed: {
+        ...mapState(mapState('product', [
+            'events'
+        ])),
+        categoryOptions () {
+            let array: string[] = []
+            CATEGORIES.forEach(category => {
+                array.push(category.text)
+            })
+            return array
+        },
+        localeOptions () {
+            let array: string[] = []
+            LOCALES.forEach(locale => {
+                array.push(locale.text)
+            })
+            return array
+        },
+        eventOptions () {
+            let array: string[] = []
+            this.$store.state.product.events.item.forEach((item) => {
+                array.push(item.data.name)
+            })
+            return array
+        }
+    },
+    async created () {
+        await (this as any).$store.dispatch('product/fetchEvents')
+    },
+    methods: {
+        reset () {
+            this.name = ''
+            this.event = 0
+            this.location = ''
+            this.locale = 0
+            this.participants = ''
+            this.max_participants = ''
+            this.lt = ''
+        },
+        async postHost () {
+            await (this as any).$store.dispatch('product/addHost', {
+                name: this.name,
+                event: this.event,
+                location: this.location,
+                locale: this.locale,
+                participants: this.participants,
+                max_participants: this.max_participants,
+                lt: this.lt
+            })
+            this.reset()
+        }
     }
-  },
-  async created () {
-    await this.$store.dispatch('product/fetchEvents')
-  },
 })
-export default class NewHost extends Vue {
-  name: string = '';
-  event: number = 0;
-  location: string = '';
-  locale: number = 0;
-  participants: number = 0;
-  max_participants: number = 0;
-  lt: number = 0;
-  isForm: boolean = true;
-
-  get events () {
-    return this.$store.state.product.events
-  }
-
-  reset () {
-    this.name = ''
-    this.event = 0
-    this.location = ''
-    this.locale = 0
-    this.participants = 0
-    this.max_participants = 0
-    this.lt = 0
-  }
-
-  async postHost () {
-    await this.$store.dispatch('product/addHost', {
-      name: this.name,
-      event: this.event,
-      location: this.location,
-      locale: this.locale,
-      participants: this.participants,
-      max_participants: this.max_participants,
-      lt: this.lt
-    })
-    this.reset()
-  }
-}
 </script>
 
 <style scoped>

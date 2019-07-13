@@ -16,12 +16,12 @@
     "pretty": true,
     "sourceMap": true,
     "types": [
-      "node",
-      "chart.js",
-      "graphql",
-      "storybook__vue",
-      "webpack",
-      "vue-app"
+      "@nuxt/vue-app",
+      "@types/node",
+      "@types/chart.js",
+      "@types/graphql",
+      "@types/storybook__vue",
+      "@types/webpack"
     ],
     "target": "esnext",
     "module": "esnext",
