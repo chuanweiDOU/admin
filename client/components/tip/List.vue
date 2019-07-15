@@ -76,7 +76,7 @@ export default Vue.extend({
 
 <style scoped>
 .tip {
-  min-width: 800px;
+  min-width: 400px;
   text-align: center;
 }
 
