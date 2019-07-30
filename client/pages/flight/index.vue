@@ -50,10 +50,10 @@ export default Vue.extend({
         }
     },
     computed: {
-        ...mapState(mapState('product', [
+        ...mapState('product', [
             'userStatus',
             'flights'
-        ])),
+        ]),
         boardingTypeOptions () {
             let array: string[] = []
             BOARDING_TYPE_LIST.forEach(category => {

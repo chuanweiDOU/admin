@@ -36,10 +36,10 @@ export default Vue.extend({
         await store.dispatch('product/fetchContacts')
     },
     computed: {
-        ...mapState(mapState('product', [
+        ...mapState('product', [
             'userStatus',
             'contacts'
-        ])),
+        ]),
         contactCategoryOptions () {
             let array: string[] = []
             CONTACT_CATEGORIES.forEach(category => {

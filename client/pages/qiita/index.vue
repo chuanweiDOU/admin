@@ -50,12 +50,12 @@ export default Vue.extend({
         }
     },
     computed: {
-        ...mapState(mapState('product', [
+        ...mapState('product', [
             'userStatus'
-        ])),
-        ...mapState(mapState('qiita', [
+        ]),
+        ...mapState('qiita', [
             'qiitas'
-        ])),
+        ]),
         categoryOptions () {
             let array: string[] = []
             CATEGORIES.forEach(category => {

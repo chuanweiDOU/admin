@@ -68,12 +68,12 @@ export default Vue.extend({
         }
     },
     computed: {
-        ...mapState(mapState('product', [
+        ...mapState('product', [
             'userStatus',
             'tips',
             'hosts',
             'events'
-        ])),
+        ]),
         eventOptions () {
             let array: string[] = [];
             this.$store.state.product.events.item.forEach((item) => {

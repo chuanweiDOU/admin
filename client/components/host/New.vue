@@ -46,7 +46,7 @@
     <main-template :is-form="isForm">
       <story-button
         text="Hostを追加"
-        @click="postHost"
+        @handleClick="postHost"
       />
     </main-template>
   </div>

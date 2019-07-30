@@ -1,42 +1,47 @@
 <template>
-  <button
-    :style="`background-color: ${bgColor}; color: ${color};`"
-    class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
-    @click="handleClick"
-  >
-    {{ text }}
-  </button>
+    <div>
+        <a href="#" class="click-button" @click="$emit('handleClick');">
+            {{ text }}
+        </a>
+    </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-  props: {
-    text: {
-      type: String
-    },
-    bgColor: {
-      type: String
-    },
-    color: {
-      type: String
+    props: {
+        text: {
+            type: String
+        }
     }
-  },
-  methods: {
-    handleClick (event) {
-      this.$emit('click', event)
-    }
-  }
 })
 </script>
 
-<style lang="scss" scoped>
-button {
-  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded;
-}
-
-button:hover {
-  @apply bg-blue-700;
-}
+<style lang="sass" scoped>
+@import '../../assets/main.scss'
+.click-button
+    display: inline-block
+    border: solid 1px $border-color
+    background-color: #fff
+    color: $normal-color
+    font-size: 1.2em
+    margin: 0 0 20px
+    padding: 10px
+    outline: none
+    appearance: none
+    -webkit-border-radius: 3px
+    -moz-border-radius: 3px
+    border-radius: 3px
+.click-button::before,
+.click-button::after
+    position: absolute
+    z-index: -1
+    display: block
+    content: ''
+    -webkit-box-sizing: border-box
+    -moz-box-sizing: border-box
+    box-sizing: border-box
+    -webkit-transition: all .3s
+    transition: all .3s
 </style>
