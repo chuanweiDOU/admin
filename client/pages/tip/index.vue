@@ -1,6 +1,9 @@
 <template>
     <main-template v-if="tips" :user-status="userStatus">
         <main-template>
+            <j-modal title="Tipを追加" style="text-align: right">
+                <new-tip />
+            </j-modal>
             <tip-list
                 :list="tips.item"
                 :number="page"
@@ -10,15 +13,6 @@
                 :max="Math.ceil(tips.item.length / 20)"
                 @form-data="applyPage"
             />
-        </main-template>
-        <main-template :is-form="isForm">
-            <new-tip />
-        </main-template>
-        <main-template :is-form="isForm">
-            <new-event />
-        </main-template>
-        <main-template :is-form="isForm">
-            <new-photo />
         </main-template>
     </main-template>
 </template>

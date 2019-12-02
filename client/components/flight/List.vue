@@ -7,14 +7,14 @@
                 <div v-if="item.page === number" class="flight-card">
                     <div class="flight-card-text">
                         <div class="title">
-                            {{ departure(item.data.departure) }}<br>{{ arrival(item.data.arrival) }}
+                            {{ timeFormat(item.data.time) }}
                         </div>
                         <div class="route">
-                            {{ item.data.registration }}({{ boardingType(item.data.boardingType) }})
+                            {{ `${departure(item.data.departure)} - ${arrival(item.data.arrival)}` }}
                         </div>
                     </div>
-                    <div class="flight-card-time">
-                        {{ timeFormat(item.data.time) }}
+                    <div class="flight-card-route">
+                        {{ item.data.registration }}({{ boardingType(item.data.boardingType) }})
                     </div>
                 </div>
             </div>
@@ -103,13 +103,14 @@ export default class FlightList extends Vue {
 
 .flight-card-text .route {
     color: #777;
-    font-size: 14px;
+    font-size: 0.8em;
     line-height: 1.5;
 }
 
-.flight-card-time {
+.flight-card-route {
     text-align: center;
     border-top: 1px solid #eee;
     padding: 20px;
+    font-size: 0.8em;
 }
 </style>

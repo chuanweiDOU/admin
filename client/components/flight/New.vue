@@ -1,58 +1,51 @@
 <template>
-    <div>
-        <main-template :is-form="isForm">
-            <j-input
-                placeholder="搭乗時間"
-                input-type="text"
-                @handleInput="applyTime"
-            ></j-input>
-        </main-template>
-        <main-template :is-form="isForm">
+    <div style="width: 100%;">
+        <j-input
+            placeholder="搭乗時間"
+            input-type="text"
+            style="text-align: left; margin: 12px;"
+            @handleInput="applyTime"
+        ></j-input>
+        <div style="display: flex; justify-content: flex-start; margin: 12px;">
             <j-select
-                :options="airportOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.departure"
-                @handleSelect="applyDeparture"
+                    :options="airportOptions"
+                    :multiple="Boolean(false)"
+                    :selected-values="form.departure"
+                    @handleSelect="applyDeparture"
             ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
             <j-select
-                :options="airportOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.arrival"
-                @handleSelect="applyArrival"
+                    :options="airportOptions"
+                    :multiple="Boolean(false)"
+                    :selected-values="form.arrival"
+                    @handleSelect="applyArrival"
             ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
             <j-select
-                :options="airlineOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.airline"
-                @handleSelect="applyAirline"
+                    :options="airlineOptions"
+                    :multiple="Boolean(false)"
+                    :selected-values="form.airline"
+                    @handleSelect="applyAirline"
             ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
             <j-select
-                :options="boardingTypeOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.boardingType"
-                @handleSelect="applyBoardingType"
+                    :options="boardingTypeOptions"
+                    :multiple="Boolean(false)"
+                    :selected-values="form.boardingType"
+                    @handleSelect="applyBoardingType"
             ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-input
-                placeholder="レジ"
-                input-type="text"
-                @handleInput="applyRegistration"
-            ></j-input>
-        </main-template>
-        <main-template :is-form="isForm">
+        </div>
+        <j-input
+            placeholder="レジ"
+            input-type="text"
+            style="text-align: left; margin: 12px;"
+            @handleInput="applyRegistration"
+        ></j-input>
+        <div style="text-align: right;">
             <j-button
-                text="Flightを追加"
-                variant-style="text"
-                @handleClick="postFlight"
+                    text="Flightを追加"
+                    variant-style="text"
+                    style="margin: 12px;"
+                    @handleClick="postFlight"
             ></j-button>
-        </main-template>
+        </div>
     </div>
 </template>
 
@@ -61,12 +54,7 @@ import Vue from 'vue'
 import { addFlight } from '~/services/flightService'
 import { AIRPORT_LIST, AIRLINE_LIST, BOARDING_TYPE_LIST } from '~/utils/flight'
 
-const MainTemplate = () => import('~/components/layout/MainTemplate.vue')
-
 export default Vue.extend({
-    components: {
-        MainTemplate
-    },
     data() {
         return {
             form: {

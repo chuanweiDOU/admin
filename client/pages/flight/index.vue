@@ -1,5 +1,8 @@
 <template>
     <main-template v-if="flights" :user-status="userStatus">
+        <j-modal title="Flightを追加" style="text-align: right">
+            <new-flight />
+        </j-modal>
         <flight-list
             :list="flights.item"
             :number="page"
@@ -9,7 +12,6 @@
             :max="Math.ceil(flights.item.length / 20)"
             @form-data="applyPage"
         />
-        <new-flight />
     </main-template>
 </template>
 

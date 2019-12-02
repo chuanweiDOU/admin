@@ -1,49 +1,32 @@
 <template>
-    <div v-if="events">
-        <main-template :is-form="isForm">
-            <j-input
-                placeholder="タイトル"
-                input-type="text"
-                @handleInput="applyTitle"
-            ></j-input>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-input
-                placeholder="URL"
-                input-type="text"
-                @handleInput="applyUrl"
-            ></j-input>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-input
-                placeholder="詳細"
-                input-type="text"
-                @handleInput="applyDescription"
-            ></j-input>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-select
-                :options="categoryOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.tags"
-                @handleSelect="applyTags"
-            ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-select
-                :options="eventOptions"
-                :multiple="Boolean(false)"
-                :selected-values="form.event"
-                @handleSelect="applyEvent"
-            ></j-select>
-        </main-template>
-        <main-template :is-form="isForm">
-            <j-button
-                text="Tipを追加"
-                variant-style="text"
-                @handleClick="postTip"
-            ></j-button>
-    </main-template>
+    <div v-if="events" style="text-align: left">
+        <j-input
+            placeholder="タイトル"
+            input-type="text"
+            @handleInput="applyTitle"
+        ></j-input>
+        <j-input
+            placeholder="URL"
+            input-type="text"
+            @handleInput="applyUrl"
+        ></j-input>
+        <j-select
+            :options="categoryOptions"
+            :multiple="Boolean(false)"
+            :selected-values="form.tags"
+            @handleSelect="applyTags"
+        ></j-select>
+        <j-select
+            :options="eventOptions"
+            :multiple="Boolean(false)"
+            :selected-values="form.event"
+            @handleSelect="applyEvent"
+        ></j-select>
+        <j-button
+            text="Tipを追加"
+            variant-style="text"
+            @handleClick="postTip"
+        ></j-button>
   </div>
 </template>
 
@@ -53,12 +36,7 @@ import { addTip } from '~/services/tipService'
 import { fetchEvents } from '~/services/eventService'
 import { CATEGORIES } from '~/utils/tip'
 
-const MainTemplate = () => import('~/components/layout/MainTemplate.vue')
-
 export default Vue.extend({
-    components: {
-        MainTemplate
-    },
     data() {
         return {
             form: {
