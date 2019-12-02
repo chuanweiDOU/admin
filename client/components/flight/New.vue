@@ -8,28 +8,28 @@
         ></j-input>
         <div style="display: flex; justify-content: flex-start; margin: 12px;">
             <j-select
-                    :options="airportOptions"
-                    :multiple="Boolean(false)"
-                    :selected-values="form.departure"
-                    @handleSelect="applyDeparture"
+                :options="airportOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.departure"
+                @handleSelect="applyDeparture"
             ></j-select>
             <j-select
-                    :options="airportOptions"
-                    :multiple="Boolean(false)"
-                    :selected-values="form.arrival"
-                    @handleSelect="applyArrival"
+                :options="airportOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.arrival"
+                @handleSelect="applyArrival"
             ></j-select>
             <j-select
-                    :options="airlineOptions"
-                    :multiple="Boolean(false)"
-                    :selected-values="form.airline"
-                    @handleSelect="applyAirline"
+                :options="airlineOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.airline"
+                @handleSelect="applyAirline"
             ></j-select>
             <j-select
-                    :options="boardingTypeOptions"
-                    :multiple="Boolean(false)"
-                    :selected-values="form.boardingType"
-                    @handleSelect="applyBoardingType"
+                :options="boardingTypeOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.boardingType"
+                @handleSelect="applyBoardingType"
             ></j-select>
         </div>
         <j-input
@@ -40,10 +40,10 @@
         ></j-input>
         <div style="text-align: right;">
             <j-button
-                    text="Flightを追加"
-                    variant-style="text"
-                    style="margin: 12px;"
-                    @handleClick="postFlight"
+                text="Flightを追加"
+                variant-style="text"
+                style="margin: 12px;"
+                @handleClick="postFlight"
             ></j-button>
         </div>
     </div>

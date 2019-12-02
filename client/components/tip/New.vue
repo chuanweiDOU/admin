@@ -1,32 +1,44 @@
 <template>
-    <div v-if="events" style="text-align: left">
-        <j-input
-            placeholder="タイトル"
-            input-type="text"
-            @handleInput="applyTitle"
-        ></j-input>
-        <j-input
-            placeholder="URL"
-            input-type="text"
-            @handleInput="applyUrl"
-        ></j-input>
-        <j-select
-            :options="categoryOptions"
-            :multiple="Boolean(false)"
-            :selected-values="form.tags"
-            @handleSelect="applyTags"
-        ></j-select>
-        <j-select
-            :options="eventOptions"
-            :multiple="Boolean(false)"
-            :selected-values="form.event"
-            @handleSelect="applyEvent"
-        ></j-select>
-        <j-button
-            text="Tipを追加"
-            variant-style="text"
-            @handleClick="postTip"
-        ></j-button>
+    <div v-if="events" style="width: 100%;">
+        <div style="display: flex; justify-content: space-between; margin: 12px;">
+            <j-input
+                placeholder="タイトル"
+                input-type="text"
+                @handleInput="applyTitle"
+            ></j-input>
+            <j-input
+                placeholder="URL"
+                input-type="text"
+                @handleInput="applyUrl"
+            ></j-input>
+            <j-input
+                placeholder="詳細"
+                input-type="text"
+                @handleInput="applyDescription"
+            ></j-input>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 12px;">
+            <j-select
+                :options="categoryOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.tags"
+                @handleSelect="applyTags"
+            ></j-select>
+            <j-select
+                 :options="eventOptions"
+                :multiple="Boolean(false)"
+                :selected-values="form.event"
+                @handleSelect="applyEvent"
+            ></j-select>
+        </div>
+        <div style="text-align: right;">
+            <j-button
+                text="Tipを追加"
+                variant-style="text"
+                style="margin: 12px;"
+                @handleClick="postTip"
+            ></j-button>
+        </div>
   </div>
 </template>
 
